@@ -1,8 +1,9 @@
-<div *ngIf="dataSource.length === 0">
+<div *ngIf="isLoading" class="spinner-container">
+  <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
   <p>Loading data...</p>
 </div>
 
-<div *ngIf="dataSource.length > 0" class="mat-elevation-z8">
+<div *ngIf="!isLoading" class="mat-elevation-z8">
   <table mat-table [dataSource]="dataSource" class="mat-table">
     <ng-container matColumnDef="position">
       <th mat-header-cell *matHeaderCellDef>Number</th>

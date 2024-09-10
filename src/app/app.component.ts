@@ -28,6 +28,7 @@ const ELEMENT_DATA: PeriodicElement[] = [
 export class AppComponent implements OnInit {
   displayedColumns: string[] = ['position', 'name', 'weight', 'symbol'];
   dataSource: PeriodicElement[] = [];
+  isLoading: boolean = true; // Zmienna do kontrolowania stanu ładowania
 
   ngOnInit(): void {
     this.fetchElements();
@@ -42,5 +43,6 @@ export class AppComponent implements OnInit {
     // this.dataSource = await response.json();
 
     this.dataSource = ELEMENT_DATA; // przypisanie symulowanych danych
+    this.isLoading = false; // Po załadowaniu danych ustawiamy isLoading na false
   }
 }
