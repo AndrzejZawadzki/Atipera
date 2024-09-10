@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { HttpClientModule } from '@angular/common/http';
 import { MatTableModule } from '@angular/material/table';
 
 import { AppComponent } from './app.component';
@@ -10,9 +9,8 @@ import { AppComponent } from './app.component';
   declarations: [AppComponent],
   imports: [
     BrowserModule,
-    BrowserAnimationsModule,
-    HttpClientModule,
-    MatTableModule,
+    BrowserAnimationsModule, // Potrzebne dla Angular Material
+    MatTableModule, // Dodanie tabeli z Angular Material
   ],
   providers: [],
   bootstrap: [AppComponent],
