@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
+import { EditElementDialogComponent } from './edit-element-dialog.component';
 
 export interface PeriodicElement {
   position: number;
@@ -23,12 +25,20 @@ const ELEMENT_DATA: PeriodicElement[] = [
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss'],
+  styleUrls: ['./app.component.css'],
 })
 export class AppComponent implements OnInit {
-  displayedColumns: string[] = ['position', 'name', 'weight', 'symbol'];
-  dataSource: PeriodicElement[] = [];
+  displayedColumns: string[] = [
+    'position',
+    'name',
+    'weight',
+    'symbol',
+    'actions',
+  ];
+  dataSource: PeriodicElement[] = [...ELEMENT_DATA]; // Kopia danych
   isLoading: boolean = true; // Zmienna do kontrolowania stanu ładowania
+
+  constructor(public dialog: MatDialog) {}
 
   ngOnInit(): void {
     this.fetchElements();
@@ -37,12 +47,22 @@ export class AppComponent implements OnInit {
   async fetchElements(): Promise<void> {
     // Symulacja pobierania danych z opóźnieniem przy użyciu fetch i setTimeout
     await new Promise((resolve) => setTimeout(resolve, 2000)); // symulacja opóźnienia
-
-    // Tutaj możesz umieścić faktyczne pobieranie danych z zewnętrznego API przy użyciu fetch
-    // np. const response = await fetch('url');
-    // this.dataSource = await response.json();
-
-    this.dataSource = ELEMENT_DATA; // przypisanie symulowanych danych
     this.isLoading = false; // Po załadowaniu danych ustawiamy isLoading na false
+  }
+
+  openEditDialog(element: PeriodicElement): void {
+    const dialogRef = this.dialog.open(EditElementDialogComponent, {
+      width: '250px',
+      data: { ...element }, // Przekazujemy kopię, aby nie mutować danych
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        // Nowa tablica, aktualizując zmieniony element
+        this.dataSource = this.dataSource.map((el) =>
+          el.position === result.position ? result : el
+        );
+      }
+    });
   }
 }
