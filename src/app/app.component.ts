@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { EditElementDialogComponent } from './edit-element-dialog.component';
+import { MatTableDataSource } from '@angular/material/table';
+import { FormControl } from '@angular/forms';
+import { debounceTime } from 'rxjs/operators';
 
 export interface PeriodicElement {
   position: number;
@@ -35,19 +38,36 @@ export class AppComponent implements OnInit {
     'symbol',
     'actions',
   ];
-  dataSource: PeriodicElement[] = [...ELEMENT_DATA]; // Kopia danych
-  isLoading: boolean = true; // Zmienna do kontrolowania stanu ładowania
+  //dataSource: PeriodicElement[] = []; // Dane pochodzące z fetch
+  dataSource: MatTableDataSource<PeriodicElement> =
+    new MatTableDataSource<PeriodicElement>([]);
+  filterControl = new FormControl(''); // Kontrolka filtra
+  isLoading = true; // Flaga do spinnera
 
   constructor(public dialog: MatDialog) {}
 
   ngOnInit(): void {
     this.fetchElements();
+
+    // Nasłuchiwanie na zmiany w filtrze z opóźnieniem 2 sekundy
+    this.filterControl.valueChanges
+      .pipe(debounceTime(2000)) // DebounceTime na 2 sekundy
+      .subscribe((value) => {
+        this.applyFilter(value);
+      });
   }
 
   async fetchElements(): Promise<void> {
+    this.isLoading = true;
     // Symulacja pobierania danych z opóźnieniem przy użyciu fetch i setTimeout
     await new Promise((resolve) => setTimeout(resolve, 2000)); // symulacja opóźnienia
+    this.dataSource.data = [...ELEMENT_DATA]; // Skopiowane dane
     this.isLoading = false; // Po załadowaniu danych ustawiamy isLoading na false
+  }
+
+  // Filtrowanie danych
+  applyFilter(filterValue: any): void {
+    this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
   openEditDialog(element: PeriodicElement): void {
@@ -59,9 +79,11 @@ export class AppComponent implements OnInit {
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
         // Nowa tablica, aktualizując zmieniony element
-        this.dataSource = this.dataSource.map((el) =>
+        this.dataSource.data = this.dataSource.data.map((el) =>
           el.position === result.position ? result : el
         );
+        // this.dataSource.data = this.dataSource; // Aktualizacja danych w tabeli
+        this.applyFilter(this.filterControl.value); // Odświeżenie filtra
       }
     });
   }

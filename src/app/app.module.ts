@@ -7,6 +7,8 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { ReactiveFormsModule } from '@angular/forms';
 
 import { AppComponent } from './app.component';
 import { EditElementDialogComponent } from './edit-element-dialog.component';
@@ -25,6 +27,8 @@ import { EditElementDialogComponent } from './edit-element-dialog.component';
     MatButtonModule, // Dodatnie przycisków
     MatInputModule, // Dodanie modułu inputa
     FormsModule,
+    MatFormFieldModule,
+    ReactiveFormsModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
