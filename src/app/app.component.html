@@ -6,25 +6,17 @@
 <div *ngIf="!isLoading" class="mat-elevation-z8">
   <div>
     <!-- Input do filtrowania -->
-    <mat-form-field appearance="outline">
-      <mat-label>Filter elements</mat-label>
+    <mat-form-field appearance="outline" class="filter-input">
+      <mat-label>Search elements</mat-label>
       <input
         matInput
         [formControl]="filterControl"
-        placeholder="Filter all fields"
+        placeholder="Type to search"
+        #input
       />
     </mat-form-field>
   </div>
 
-  <!-- <mat-form-field>
-    <mat-label>Filter</mat-label>
-    <input
-      matInput
-      (keyup)="applyFilter($event)"
-      placeholder="Ex. ium"
-      #input
-    />
-  </mat-form-field> -->
   <table mat-table [dataSource]="dataSource" class="mat-table">
     <ng-container matColumnDef="position">
       <th mat-header-cell *matHeaderCellDef>Number</th>

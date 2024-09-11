@@ -38,7 +38,6 @@ export class AppComponent implements OnInit {
     'symbol',
     'actions',
   ];
-  //dataSource: PeriodicElement[] = []; // Dane pochodzące z fetch
   dataSource: MatTableDataSource<PeriodicElement> =
     new MatTableDataSource<PeriodicElement>([]);
   filterControl = new FormControl(''); // Kontrolka filtra
@@ -70,6 +69,11 @@ export class AppComponent implements OnInit {
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
+  applyFilterMat(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+  }
+
   openEditDialog(element: PeriodicElement): void {
     const dialogRef = this.dialog.open(EditElementDialogComponent, {
       width: '250px',
@@ -78,11 +82,10 @@ export class AppComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
-        // Nowa tablica, aktualizując zmieniony element
+        // Nowa tablica, aktualizacja zmienionego elementu
         this.dataSource.data = this.dataSource.data.map((el) =>
           el.position === result.position ? result : el
         );
-        // this.dataSource.data = this.dataSource; // Aktualizacja danych w tabeli
         this.applyFilter(this.filterControl.value); // Odświeżenie filtra
       }
     });

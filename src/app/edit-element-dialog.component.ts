@@ -13,7 +13,7 @@ export class EditElementDialogComponent {
   ) {}
 
   onNoClick(): void {
-    this.dialogRef.close();
+    this.dialogRef.close(); // Zamykamy pop-up
   }
 
   onSaveClick(): void {
