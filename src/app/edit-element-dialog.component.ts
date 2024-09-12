@@ -13,10 +13,10 @@ export class EditElementDialogComponent {
   ) {}
 
   onNoClick(): void {
-    this.dialogRef.close(); // Zamykamy pop-up
+    this.dialogRef.close();
   }
 
   onSaveClick(): void {
-    this.dialogRef.close(this.data); // Zwracamy zmodyfikowane dane
+    this.dialogRef.close(this.data);
   }
 }

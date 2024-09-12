@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
-import { delay, debounceTime, map } from 'rxjs/operators';
+import { delay } from 'rxjs/operators';
 
 export interface PeriodicElement {
   position: number;
@@ -40,7 +40,6 @@ export class DataService {
         val.toString().toLowerCase().includes(filterValue.toLowerCase())
       )
     );
-
-    return of(filteredData).pipe(debounceTime(2000), delay(2000));
+    return of(filteredData).pipe(delay(2000));
   }
 }

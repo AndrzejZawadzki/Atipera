@@ -15,18 +15,15 @@ import { EditElementDialogComponent } from './edit-element-dialog.component';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    EditElementDialogComponent, // Dodanie komponentu dialogu
-  ],
+  declarations: [AppComponent, EditElementDialogComponent],
   imports: [
     BrowserModule,
-    BrowserAnimationsModule, // Potrzebne dla Angular Material
-    MatTableModule, // Dodanie tabeli z Angular Material
-    MatProgressSpinnerModule, // Dodanie spinnera z Angular Material
-    MatDialogModule, // Dodanie modułu dialogu
-    MatButtonModule, // Dodatnie przycisków
-    MatInputModule, // Dodanie modułu inputa
+    BrowserAnimationsModule,
+    MatTableModule,
+    MatProgressSpinnerModule,
+    MatDialogModule,
+    MatButtonModule,
+    MatInputModule,
     FormsModule,
     MatFormFieldModule,
     ReactiveFormsModule,
